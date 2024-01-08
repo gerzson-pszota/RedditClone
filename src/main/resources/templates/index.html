@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RedditClone</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<img th:src="@{logo.png}" alt="Reddit Logo"/>
+<div>
+    <p th:if="${param.username != null and #strings.length(param.username) > 0}">
+        Logged in as: <span th:text="${param.username}"></span>
+        <a th:href="@{/signOut}">[sign out]</a>
+    </p>
+    <a th:href="@{/allPosts(username=${username})}" class="headerLinks">All posts</a>
+    <a th:href="@{/submit(username=${username})}" class="headerLinks">Submit new post</a>
+    <a th:href="@{/identification(username=${username})}" class="headerLinks">Sign In / Create Account</a>
+    <h1>Trending posts</h1>
+    <table>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.vote}"></td>
+            <td><a th:href="@{'/upVote?id=' + ${post.id} + '&amp;username=' + ${username}}" id="plus">↑</a></td>
+            <td><a th:href="@{'/downVote?id=' + ${post.id} + '&amp;username=' + ${username}}" id="minus">↓</a></td>
+            <td><a th:href="@{${post.url}}" th:text="${post.title}"></a></td>
+            <td id="date" th:text="${post.date}"></td>
+
+        </tr>
+    </table>
+</div>
+</body>
+</html>

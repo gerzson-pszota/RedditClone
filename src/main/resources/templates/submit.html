@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RedditClone</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<img th:src="@{logo.png}" alt="Reddit Logo"/>
+<div>
+    <p th:if="${param.username != null and #strings.length(param.username) > 0}">
+        Logged in as: <span th:text="${param.username}"></span>
+        <a th:href="@{/signOut}">[sign out]</a>
+    </p>
+    <a th:href="@{/(username=${username})}" class="headerLinks">Home</a>
+    <h1>Submit new post</h1>
+    <form th:action="@{/submit}" th:object="${post}" method="post">
+        <input type="hidden" name="username" th:value="${param.username}" />
+        <input type="text" id="title" name="title" placeholder="Title" th:field="*{title}"/>
+        <input type="text" id="url" name="url" placeholder="URL" th:field="*{url}"/>
+        <input type="submit" value="Add Post"/>
+    </form>
+
+</div>
+
+</body>
+</html>
