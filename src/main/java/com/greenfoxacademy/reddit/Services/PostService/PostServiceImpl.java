@@ -51,8 +51,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public void downVote(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
-        post.downVote();
-        postRepository.save(post);
+        if (post.getVote() > 0) {
+            post.downVote();
+            postRepository.save(post);
+        }
     }
 
     @Override
@@ -62,10 +64,13 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
     }
 
+
     @Override
     public void downVoteInAllPosts(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
-        post.downVote();
-        postRepository.save(post);
+        if (post.getVote() > 0) {
+            post.downVote();
+            postRepository.save(post);
+        }
     }
 }
